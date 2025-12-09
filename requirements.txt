@@ -1,0 +1,9 @@
+streamlit
+langchain
+langchain-groq
+groq
+requests
+beautifulsoup4
+feedparser
+python-dateutil
+python-dotenv
