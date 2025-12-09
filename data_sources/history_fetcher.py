@@ -1,20 +1,17 @@
 import requests
 from datetime import date
+from bs4 import BeautifulSoup
 from config.settings import MAX_HISTORY_CHARS
 
 
 def fetch_history_for_date(target_date: date) -> str:
-    """
-    Fetch 'On This Day' events using Wikipedia REST API
-    with proper headers to avoid 403 errors.
-    """
-    month = target_date.month
+    month = target_date.strftime("%B")
     day = target_date.day
 
-    url = f"https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/{month}/{day}"
+    url = f"https://en.wikipedia.org/wiki/{month}_{day}"
 
     headers = {
-        "User-Agent": "UPSC-Quiz-App/1.0 (educational use)"
+        "User-Agent": "Mozilla/5.0"
     }
 
     try:
@@ -24,15 +21,21 @@ def fetch_history_for_date(target_date: date) -> str:
         print(f"Error fetching history: {e}")
         return ""
 
-    data = response.json()
-    events = data.get("events", [])
+    soup = BeautifulSoup(response.text, "html.parser")
+    content_div = soup.find("span", {"id": "Events"})
+
+    if not content_div:
+        return ""
+
+    ul = content_div.find_parent("h2").find_next_sibling("ul")
+    if not ul:
+        return ""
+
+    items = ul.find_all("li")
 
     texts = []
-    for event in events:
-        year = event.get("year", "")
-        description = event.get("text", "")
-        line = f"{year}: {description}"
-        texts.append(line)
+    for item in items:
+        texts.append(item.get_text(strip=True))
 
     combined = "\n".join(texts)
 
