@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
-from config.settings import MODEL_NAME, TEMPERATURE
+from Bodh.config.settings import MODEL_NAME, TEMPERATURE
 
 # Load environment variables from .env if present
 load_dotenv()

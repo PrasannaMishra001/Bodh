@@ -1,5 +1,5 @@
 from langchain.prompts import PromptTemplate
-from config.settings import (
+from Bodh.config.settings import (
     NUM_PRELIMS_QUESTIONS,
     NUM_MAINS_QUESTIONS,
 )

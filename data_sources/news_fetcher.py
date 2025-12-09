@@ -2,7 +2,7 @@ from datetime import date
 import feedparser
 from bs4 import BeautifulSoup
 from dateutil import parser as date_parser
-from config.settings import MAX_NEWS_CHARS
+from Bodh.config.settings import MAX_NEWS_CHARS
 from data_sources.rss_sources import RSS_FEEDS
 
 

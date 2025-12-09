@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import date
-from config.settings import CACHE_DIR
+from Bodh.config.settings import CACHE_DIR
 
 
 def _get_cache_file_path(target_date: date) -> str:

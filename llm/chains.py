@@ -1,6 +1,6 @@
 from langchain.chains import LLMChain, SequentialChain
-from llm.groq_client import get_llm
-from llm.prompt_templates import (
+from Bodh.llm.groq_client import get_llm
+from Bodh.llm.prompt_templates import (
     get_history_prompt,
     get_news_prompt,
     get_quiz_prompt,

@@ -1,7 +1,7 @@
 import requests
 from datetime import date
 from bs4 import BeautifulSoup
-from config.settings import MAX_HISTORY_CHARS
+from Bodh.config.settings import MAX_HISTORY_CHARS
 
 
 def fetch_history_for_date(target_date: date) -> str:
