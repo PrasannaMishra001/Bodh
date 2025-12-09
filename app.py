@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import date
 
-from Bodh.config.settings import APP_TITLE, APP_DESCRIPTION
+from config.settings import APP_TITLE, APP_DESCRIPTION
 from data_sources import fetch_history_for_date, fetch_news_for_date
 from llm import generate_quiz
 from quizzes import format_quiz_markdown
