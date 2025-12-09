@@ -1,41 +1,30 @@
 import requests
 from datetime import date
-from bs4 import BeautifulSoup
-from Bodh.config.settings import MAX_HISTORY_CHARS
+from config.settings import MAX_HISTORY_CHARS
 
 
 def fetch_history_for_date(target_date: date) -> str:
-    month = target_date.strftime("%B")
+    month = target_date.month
     day = target_date.day
 
-    url = f"https://en.wikipedia.org/wiki/{month}_{day}"
-
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
+    url = f"https://byabbe.se/on-this-day/{month}/{day}/events.json"
 
     try:
-        response = requests.get(url, headers=headers, timeout=15)
+        response = requests.get(url, timeout=15)
         response.raise_for_status()
     except Exception as e:
         print(f"Error fetching history: {e}")
         return ""
 
-    soup = BeautifulSoup(response.text, "html.parser")
-    content_div = soup.find("span", {"id": "Events"})
-
-    if not content_div:
-        return ""
-
-    ul = content_div.find_parent("h2").find_next_sibling("ul")
-    if not ul:
-        return ""
-
-    items = ul.find_all("li")
+    data = response.json()
+    events = data.get("events", [])
 
     texts = []
-    for item in items:
-        texts.append(item.get_text(strip=True))
+    for event in events:
+        year = event.get("year", "")
+        description = event.get("description", "")
+        line = f"{year}: {description}"
+        texts.append(line)
 
     combined = "\n".join(texts)
 
